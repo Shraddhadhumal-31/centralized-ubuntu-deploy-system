@@ -17,7 +17,7 @@ The Ubuntu Deploy System provides lab administrators with an intuitive interface
 
 ## 3. Prerequisites
 
-- **Server OS**: Ubuntu Server 20.04 LTS or 22.04 LTS (or compatible Linux distribution)
+- **Server OS**: Ubuntu Server 24.04 LTS / 22.04 LTS (or compatible Linux distribution)
 - **Python**: Python 3.10+ with `python3-venv` and `python3-pip`
 - **Node.js**: Node.js 18+ and `npm` (required for build phase)
 - **FOG Server**: An existing running FOG Project server (v1.5.x or newer) with network connectivity to lab machines

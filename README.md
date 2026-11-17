@@ -7,7 +7,7 @@
 
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/Frontend-React%2018-61DAFB.svg?style=flat&logo=react)](https://react.dev)
-[![Ubuntu](https://img.shields.io/badge/Server-Ubuntu%2022.04%20LTS-E95420.svg?style=flat&logo=ubuntu)](https://ubuntu.com)
+[![Ubuntu](https://img.shields.io/badge/Server-Ubuntu%2024.04%20LTS-E95420.svg?style=flat&logo=ubuntu)](https://ubuntu.com)
 [![FOG Project](https://img.shields.io/badge/Cloning%20Engine-FOG%20Project%201.5.10-blue.svg)](https://fogproject.org)
 [![License](https://img.shields.io/badge/License-Academic-green.svg)]()
 
@@ -42,7 +42,7 @@ The **Centralized Ubuntu Deployment System** solves this challenge by providing 
                        ┌────────────────────────────────────────┐
                        │              FOG SERVER                │
                        │   PXE / TFTP / DHCP / Partclone Engine │
-                       │    (Ubuntu Server 22.04 @ 192.168.50.10)│
+                       │    (Ubuntu Server 24.04 @ 192.168.50.10)│
                        └──────────────────┬─────────────────────┘
                                           │ Gigabit Ethernet Switch
                    ┌──────────────────────┴──────────────────────┐
@@ -60,7 +60,7 @@ The **Centralized Ubuntu Deployment System** solves this challenge by providing 
 
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Operating System** | Ubuntu Server 22.04.5 LTS | Core server infrastructure and deployment host |
+| **Operating System** | Ubuntu Server 24.04 LTS (Noble Numbat) | Core server infrastructure and deployment host |
 | **Cloning & PXE Engine**| FOG Project 1.5.10 / Partclone | Network booting, disk partition imaging, and storage |
 | **Backend API** | FastAPI (Python 3.10+) | High-performance asynchronous REST API & task orchestration |
 | **Frontend UI** | React.js (Vite + CSS3) | Single-page administrative dashboard and live monitor |
