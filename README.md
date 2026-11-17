@@ -27,32 +27,20 @@ The **Centralized Ubuntu Deployment System** solves this challenge by providing 
 
 ## 🏗️ 2. System Architecture
 
-```
-                       ┌────────────────────────────────────────┐
-                       │           Lab Administrator            │
-                       └──────────────────┬─────────────────────┘
-                                          │ Web Browser (Port 8000)
-                                          ▼
-                       ┌────────────────────────────────────────┐
-                       │     UBUNTU DEPLOY SYSTEM DASHBOARD     │
-                       │   React.js Frontend + FastAPI Backend  │
-                       └──────────────────┬─────────────────────┘
-                                          │ REST API Integration
-                                          ▼
-                       ┌────────────────────────────────────────┐
-                       │              FOG SERVER                │
-                       │   PXE / TFTP / DHCP / Partclone Engine │
-                       │    (Ubuntu Server 24.04 @ 192.168.50.10)│
-                       └──────────────────┬─────────────────────┘
-                                          │ Gigabit Ethernet Switch
-                   ┌──────────────────────┴──────────────────────┐
-                   │                                             │
-                   ▼ (PXE Image Capture)                         ▼ (Multicast / Unicast Deploy)
-        ┌──────────────────────┐                     ┌──────────────────────┐
-        │   Master Workstation │                     │  Client Workstations │
-        │   (Golden OS Source) │                     │ (PC-01, PC-02... 30) │
-        └──────────────────────┘                     └──────────────────────┘
-```
+<div align="center">
+  <img src="docs/architecture-diagram.jpg" alt="System Architecture Diagram" width="850"/>
+  <p><em>Figure: Centralized Ubuntu Deployment System Architecture</em></p>
+</div>
+
+The system architecture consists of four primary tiers:
+1. **Administrator & Web Dashboard**: The administrator accesses the intuitive React-based Web Dashboard to select target workstations and monitor live deployment progress.
+2. **Central Deployment Server (Ubuntu Server 24.04 + FOG Server)**:
+   - **Master Ubuntu Image**: Stores the customized OS image with pre-installed software and configurations captured from the Master PC.
+   - **PXE Boot / Image Deployment Engine**: Manages DHCP, TFTP, and Partclone cloning tasks.
+3. **Laboratory Local Network (LAN)**: High-speed Gigabit Ethernet switch facilitating multicast/unicast image transfer.
+4. **Target Client Workstations (`PC-01`, `PC-02`, `PC-03` ... `PC-n`)**: Receive the cloned OS image over PXE network boot and stream live progress feedback back to the server.
+   - **Solid arrows**: Deployment control and disk image data flow.
+   - **Dashed arrows**: Real-time deployment status and monitoring feedback.
 
 ---
 
