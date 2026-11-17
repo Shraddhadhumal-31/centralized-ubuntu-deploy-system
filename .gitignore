@@ -1,0 +1,36 @@
+# Environment & Secrets (NEVER upload to GitHub)
+.env
+*.env
+.env.*
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+dist/
+.vite/
+
+# Database & Runtime
+*.db
+*.sqlite
+*.sqlite3
+*.log
+.pid
+deploy_history.db
+
+# Archives & Large Files (GitHub restricts files > 100MB; upload releases instead)
+*.zip
+*.tar.gz
+*.iso
+*.img
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

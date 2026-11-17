@@ -1,0 +1,25 @@
+# Secrets
+.env
+*.env
+.env.*
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Frontend
+node_modules/
+frontend/dist/
+dist/
+.vite/
+
+# Database & Runtime
+*.db
+deploy_history.db
+test.db
+.pid
+*.log
+app.log

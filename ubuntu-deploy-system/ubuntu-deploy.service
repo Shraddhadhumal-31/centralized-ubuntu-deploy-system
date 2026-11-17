@@ -1,0 +1,24 @@
+# Systemd service template for Ubuntu Deploy System
+# Install:
+#   1. Copy to /etc/systemd/system/ubuntu-deploy.service
+#   2. Edit paths and user below
+#   3. sudo systemctl daemon-reload
+#   4. sudo systemctl enable ubuntu-deploy
+#   5. sudo systemctl start ubuntu-deploy
+
+[Unit]
+Description=Ubuntu Deploy System
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+Group=YOUR_USERNAME
+WorkingDirectory=/path/to/ubuntu-deploy-system
+EnvironmentFile=/path/to/ubuntu-deploy-system/.env
+ExecStart=/path/to/ubuntu-deploy-system/venv/bin/uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

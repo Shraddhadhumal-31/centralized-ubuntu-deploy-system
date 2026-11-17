@@ -1,0 +1,73 @@
+================================================================================
+QUICK CLI CHEATSHEET: 1-DAY RECOVERY & ADAPTATION FOR UBUNTU SERVER + FOG
+Group G-35 | Centralized Ubuntu Deployment System
+(UPDATED: EXCLUDING OLD TEST IMAGES ~20 GiB FOR CLEAN REUSABLE TRANSFER)
+================================================================================
+
+PHASE 1: AT SOURCE SERVER (BEFORE TOUCHING OR SHUTTING DOWN)
+--------------------------------------------------------------------------------
+1. Insert USB Drive and mount it:
+   sudo lsblk -f
+   sudo mkdir -p /media/backup_usb
+   sudo mount /dev/sdX1 /media/backup_usb    # (replace sdX1 with your USB partition)
+
+2. Run Pre-Flight Inspection:
+   chmod +x 01_inspect_server.sh
+   ./01_inspect_server.sh
+   * Note if /images is on a separate partition or directly on the root partition (/)
+
+3. Create the Clean Reusable System Package (EXCLUDING test images ~20 GiB):
+   chmod +x 02_create_safeguard_backup.sh 02b_create_reusable_os_archive.sh
+   sudo ./02_create_safeguard_backup.sh /media/backup_usb/safeguard_backup
+   sudo ./02b_create_reusable_os_archive.sh /media/backup_usb
+
+4. Safely Unmount USB:
+   sudo umount /media/backup_usb
+   sync
+
+* Notice: The source server remains 100% untouched and original files are unchanged!
+
+
+PHASE 2: AT DESTINATION PC (NEW LABORATORY)
+--------------------------------------------------------------------------------
+1. Connect Destination PC to Power & Lab Network Switch.
+2. Boot Destination PC with Live USB (Ubuntu Live or Clonezilla command line).
+3. Plug in the USB drive containing the backup archive.
+4. Mount USB and run the 1-step Automated Restore Wizard:
+   sudo mkdir -p /media/usb
+   sudo mount /dev/sdX1 /media/usb
+   sudo /media/usb/02c_restore_reusable_os_archive.sh /dev/sda /media/usb/ubuntu_fog_clean_system_*.tar.gz
+5. Once completed, reboot into the newly restored Ubuntu Server!
+
+
+PHASE 3: NETWORK & SERVICE ADAPTATION & CLEANUP (AFTER BOOTING NEW SERVER)
+--------------------------------------------------------------------------------
+1. Login to the restored Ubuntu Server.
+2. Check new network interface name:
+   ip -br link
+
+3. Adapt Network & FOG IP Settings:
+   chmod +x 03_adapt_new_network.sh 04_clean_fog_db_images.sh
+   sudo ./03_adapt_new_network.sh <NEW_IP> <interface_name> <gateway_ip>
+
+4. Clean Old Test Image Records from FOG Database (Safe & Verified):
+   sudo ./04_clean_fog_db_images.sh
+   (Automatically unbinds host associations, drops old test records, and checks marker files)
+
+5. Restart FOG Services:
+   sudo systemctl restart FOGImageReplicator FOGMulticastManager apache2 mariadb
+   systemctl is-active FOGImageReplicator apache2 mariadb
+
+6. Start the Dashboard:
+   cd ~/ubuntu-deploy-system
+   ./start.sh
+
+7. Open Browser from any PC in the lab:
+   - FOG Web UI   : http://<NEW_IP>/fog/management
+   - Dashboard UI : http://<NEW_IP>:3000
+
+8. Create New Master Image in FOG:
+   - Register the new lab's client PC.
+   - Create new image definition in FOG Web UI (e.g., 'Lab_New_Master').
+   - Trigger Capture task and deploy to new laboratory PCs!
+================================================================================
